@@ -54,7 +54,10 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'userId',
       // onDelete: 'cascade',
       // hooks: 'true'
-    })
+    });
+    User.hasMany(models.Album, { foreignKey: 'userId' });
+    User.hasMany(models.Comment, { foreignKey: 'userId' });
+
   };
 
   User.prototype.toSafeObject = function() { // remember, this cannot be an arrow function
