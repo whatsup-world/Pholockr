@@ -52,8 +52,8 @@ module.exports = (sequelize, DataTypes) => {
     User.hasMany(models.Image, {
       // as: 'images',
       foreignKey: 'userId',
-      // onDelete: 'cascade',
-      // hooks: 'true'
+      onDelete: 'cascade',
+      hooks: 'true'
     });
     User.hasMany(models.Album, { foreignKey: 'userId' });
     User.hasMany(models.Comment, { foreignKey: 'userId' });
