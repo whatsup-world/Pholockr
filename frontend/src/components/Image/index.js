@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllImages } from '../../store/image';
+import { thunkGetAllImages } from '../../store/image';
 
 const ImageList = () => {
   const dispatch = useDispatch();
@@ -8,7 +8,7 @@ const ImageList = () => {
   // console.log("component imageList: ", imageList);
 
   useEffect(() => {
-    dispatch(getAllImages());
+    dispatch(thunkGetAllImages());
   }, [dispatch]);
 
   return (
