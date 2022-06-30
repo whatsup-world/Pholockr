@@ -6,14 +6,22 @@ import SignupFormPage from "./components/SignupFormPage";
 import ImageFormPage from "./components/ImageFormPage";
 import ImageList from "./components/Image";
 import ImageDetail from "./components/ImageDetail";
+import ImageDeletePage from "./components/ImageDeletePage";
 import * as sessionActions from "./store/session";
+import {thunkGetAllImages} from "./store/image";
+import {thunkGetComments} from "./store/comment";
+
 import Navigation from "./components/Navigation";
+
+
 
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
+    dispatch(thunkGetAllImages());
+    dispatch(thunkGetComments());
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
   }, [dispatch]);
 
@@ -31,10 +39,13 @@ function App() {
           <Route exact path="/images">
             <ImageList />
           </Route>
-          <Route exact path="/images/:imageId">
+          <Route path="/images/:imageId">
             <ImageDetail />
           </Route>
-          <Route path="/images/new">
+          {/* <Route path="/images/:imageId">
+            <ImageDeletePage />
+          </Route> */}
+          <Route exact path="/upload">
             <ImageFormPage />
           </Route>
         </Switch>

@@ -1,10 +1,11 @@
 import { csrfFetch } from "./csrf";
 
 // define types
-const GET_ALL_IMAGES = 'image/getAllImages';
-// const GET_ONE_IMAGE = 'image/getOneImage';
-const CREATE_IMAGE = 'image/createImage';
-const DELETE_IMAGE = 'image/deleteImage';
+const GET_ALL_IMAGES = 'image/GET_ALL_IMAGES';
+const GET_ONE_IMAGE = 'image/GET_ONE_IMAGE';
+const CREATE_IMAGE = 'image/CREATE_IMAGE';
+
+const DELETE_IMAGE = 'image/DELETE_IMAGE';
 
 // define actions
 const loadImages = (images) => {
@@ -14,12 +15,12 @@ const loadImages = (images) => {
   };
 };
 
-// const loadImage = (images) => {
-//   return {
-//     type: GET_ONE_IMAGE,
-//     image
-//   };
-// };
+const getOneImage = (image) => {
+  return {
+    type: GET_ONE_IMAGE,
+    image
+  };
+};
 
 const createImage = (image) => {
   return {
@@ -28,10 +29,10 @@ const createImage = (image) => {
   };
 };
 
-const deleteImage = (image) => {
+const deleteImage = (imageId) => {
   return {
     type: DELETE_IMAGE,
-    image
+    imageId
   };
 };
 
@@ -42,51 +43,50 @@ export const thunkGetAllImages = () => async (dispatch) => {
   if (response.ok) {
     const data = await response.json();
 
-    console.log("++++++++++++++++thunk data++++++++++++++++: ", data)
+    // console.log("++++++++++++++++thunk data++++++++++++++++: ", data)
     dispatch(loadImages(data));
     return data;
   }
 };
 
-// export const getOneImage = (imageId) => async (dispatch) => {
-//   const response = await fetch(`/api/images/${imageId}`);
+export const thunkGetOneImage = (imageId) => async (dispatch) => {
+  const response = await csrfFetch(`/api/images/${imageId}`);
 
-//   if (response.ok) {
-//     const data = await response.json();
+  if (response.ok) {
+    const data = await response.json();
 
-//     // console.log("thunk data: ", data)
-//     dispatch(loadImage(data));
-//     return data;
-//   } else {
-//     return await response.json()
-//   }
-// };
+    // console.log("thunk data: ", data)
+    dispatch(getOneImage(data));
+    // console.log("++++++++++++++++thunk data++++++++++++++++: ", data)
+    return data;
+  }
+};
 
-export const thunkCreateImage = (data) => async (dispatch) => {
+export const thunkCreateImage = (image) => async (dispatch) => {
   const response = await csrfFetch('/api/images', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data)
+    body: JSON.stringify(image)
   });
 
   if (response.ok) {
     const data = await response.json();
-    console.log("++++++++++thunk data++++++++++++++: ", data)
+    // console.log("++++++++++thunk data++++++++++++++: ", data)
     dispatch(createImage(data));
     return data;
   }
 };
 
-export const thunkDeleteImage = (image) => async (dispatch) => {
-  const response = await csrfFetch(`/api/images/${image.id}`, {
+export const thunkDeleteImage = (imageId) => async (dispatch) => {
+  const response = await csrfFetch(`/api/images/${imageId}`, {
     method: 'DELETE'
   });
 
   if (response.ok) {
     const image = await response.json();
     // console.log("thunk data: ", data)
-    dispatch(deleteImage(image));
-    return image;
+    dispatch(deleteImage(imageId));
+    // return image;
   }
 };
 
@@ -99,7 +99,16 @@ const imagesReducer = (state = {}, action) => {
     case GET_ALL_IMAGES: {
       const newState = { ...state };
       action.images.forEach((image) => (newState[image.id] = image));
-      console.log("+++++++++reducer newState+++++++++++++: ", newState)
+      // console.log("+++++++++reducer newState+++++++++++++: ", newState)
+      return newState;
+    };
+
+    case GET_ONE_IMAGE: {
+      const newState = { ...state,
+        [action.image.id]: action.image
+      };
+      // action.image.forEach((image) => (newState[image.id] = image));
+      // console.log("+++++++++reducer newState+++++++++++++: ", newState)
       return newState;
     };
 
@@ -111,13 +120,12 @@ const imagesReducer = (state = {}, action) => {
       // console.log(newState)
       return newState
     };
+
+
     case DELETE_IMAGE: {
-      const newState = {
-        ...state,
-        [action.image.id]: action.image
-      };
+      const newState = {...state};
       // console.log(newState)
-      delete newState[action.image.id];
+      delete newState[action.imageId];
       return newState
     };
 

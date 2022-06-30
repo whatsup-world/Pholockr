@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from 'react-router-dom';
 // import { Redirect } from "react-router-dom";
 // import * as sessionActions from "../../store/session";
 import { thunkCreateImage } from "../../store/image"
@@ -8,6 +9,7 @@ import './ImageForm.css'
 function ImageFormPage() {
   // const [isLoaded, setIsLoaded] = useState(false)
   const dispatch = useDispatch();
+  const history = useHistory();
 
   // const sessionUser = useSelector((state) => state.session.user);
   const userId = useSelector(state => state.session.user?.id);
@@ -21,19 +23,21 @@ function ImageFormPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-      // const newImage = { userId, imageUrl, albumId }
-      setErrors([]);
+      // const payload = { userId, imageUrl, albumId }
 
-      const newImage = await dispatch(thunkCreateImage({ imageUrl, userId, albumId }))
+      let newImage = await dispatch(thunkCreateImage({imageUrl, userId, albumId}));
+      // setErrors = ([]);
+      // setImageUrl("");
       console.log(newImage)
-      return newImage
+      // return newImage
+      history.push(`/images/${newImage.id}`);
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <ul>
+      {/* <ul>
         {errors.map((error, idx) => <li key={idx}>{error}</li>)}
-      </ul>
+      </ul> */}
       <label>
         Image Link
         <input
@@ -54,10 +58,12 @@ function ImageFormPage() {
       </label> */}
       <label>
         Select Album
+
         <input
+          // hidden={true}
           type="text"
           value={albumId}
-          onChange={(e) => setAlbumId(e.target.value)}
+          onChange={(e) => setAlbumId(1)}  // set the defualt album
           // required
         />
       </label>

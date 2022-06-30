@@ -1,32 +1,47 @@
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom"
+import { useParams, useHistory } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux";
-import { thunkGetAllImages } from "../../store/image";
+import { thunkDeleteImage, thunkGetAllImages, thunkGetOneImage } from "../../store/image";
+import { ImageDeletePage } from "../ImageDeletePage";
 
 
 const ImageDetail = () => {
   const dispatch = useDispatch();
   const { imageId } = useParams();
-  // console.log("+++++++++++component imageDetail+++++++: ", state);
-
+  const user = useSelector(state => state.session.user)
+  const history = useHistory();
+  // console.log("+++++++++++component imageDetail+++++++: ", user);
   const image = useSelector(state => state.images[imageId]);
-  // const [ showEditForm, setShowEditForm ] = useState(false);
-  // const [ showDeleteForm, setShowDeleteForm ] = useState(false);
 
   useEffect(() => {
+    // dispatch(thunkGetOneImage(imageId));
     dispatch(thunkGetAllImages());
   }, [dispatch]);
 
-  console.log("+++++++++++component imageDetail+++++++: ", image);
+  const deleteImage = async e => {
+    await dispatch(thunkDeleteImage(imageId));
+    history.push('/images')
+  }
 
+  console.log("+++++++++++component imageDetail+++++++: ", imageId);
 
   return (
-    <div id="image-container">
       <>
-        <h1>Image Detail</h1>
-        <img src={image.imageUrl} alt={image.userId}/>
+        <div id="image-container">
+          <h1>Image Detail</h1>
+          <img src={image?.imageUrl} alt="image"/>
+            {user?.id === image?.userId && <button>Edit Image</button>}
+            {/* {user?.id === image?.userId && <button onClick={history.push(`/images/${imageId}`)}>Delete Image</button>} */}
+            {user?.id === image?.userId && <button onClick={deleteImage}>Delete Image</button>}
+          <div id="comment-component">
+            <div>
+              {
+                image?.Comments?.map(comment => <div key={comment.id}>{comment.message}</div>)
+              }
+            </div>
+          </div>
+        </div>
       </>
-    </div>
   );
 
 

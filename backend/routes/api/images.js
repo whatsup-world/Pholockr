@@ -27,7 +27,7 @@ router.get('/user/:id', asyncHandler(async (req, res) => {
 
 
 
-router.get('/:id', asyncHandler(async (req, res) => {
+router.get('/:id(\\d+)', asyncHandler(async (req, res) => {
   const imageId = req.params.id
   const image = await Image.findByPk(imageId, {
     include: {
@@ -47,7 +47,7 @@ router.post('/', requireAuth, asyncHandler(async (req, res) => {
 }));
 
 
-router.put('/:id', requireAuth, asyncHandler(async (req, res) => {
+router.put('/:id(\\d+)', requireAuth, asyncHandler(async (req, res) => {
 
   const imageId = req.params.id
   const image = await Image.findByPk(imageId, {});
@@ -59,7 +59,7 @@ router.put('/:id', requireAuth, asyncHandler(async (req, res) => {
 }));
 
 
-router.delete('/:id', requireAuth, asyncHandler(async (req, res) => {
+router.delete('/:id(\\d+)', requireAuth, asyncHandler(async (req, res) => {
   const image = await Image.findByPk(req.params.id, {
     // include: ['comments'],
     // order: [ ['id', 'DESC'] ]
