@@ -32,9 +32,9 @@ router.get('/:id', asyncHandler(async (req, res) => {
   const image = await Image.findByPk(imageId, {
     include: {
       model: Comment,
-    },
+    }
   });
-  // console.log("backend Image: ", images)
+  // console.log("backend Image: ", image)
   return res.json( image );
 }))
 

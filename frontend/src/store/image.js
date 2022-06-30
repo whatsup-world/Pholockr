@@ -42,9 +42,9 @@ export const thunkGetAllImages = () => async (dispatch) => {
   if (response.ok) {
     const data = await response.json();
 
-    // console.log("thunk data: ", data)
+    console.log("++++++++++++++++thunk data++++++++++++++++: ", data)
     dispatch(loadImages(data));
-    return data;
+    // return data;
   }
 };
 
@@ -71,7 +71,7 @@ export const thunkCreateImage = (data) => async (dispatch) => {
 
   if (response.ok) {
     const data = await response.json();
-    console.log("thunk data: ", data)
+    console.log("++++++++++thunk data++++++++++++++: ", data)
     dispatch(createImage(data));
     return data;
   }
@@ -97,9 +97,9 @@ const initialState = {};
 const imagesReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_ALL_IMAGES: {
-      const newState = {};
+      const newState = { ...state };
       action.images.forEach((image) => (newState[image.id] = image));
-      // console.log("reducer newState: ", newState)
+      console.log("+++++++++reducer newState+++++++++++++: ", newState)
       return newState;
     };
 
