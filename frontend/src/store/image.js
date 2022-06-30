@@ -37,14 +37,14 @@ const deleteImage = (image) => {
 
 // define thunks
 export const thunkGetAllImages = () => async (dispatch) => {
-  const response = await fetch('/api/images');
+  const response = await csrfFetch('/api/images');
 
   if (response.ok) {
     const data = await response.json();
 
     console.log("++++++++++++++++thunk data++++++++++++++++: ", data)
     dispatch(loadImages(data));
-    // return data;
+    return data;
   }
 };
 
@@ -92,9 +92,9 @@ export const thunkDeleteImage = (image) => async (dispatch) => {
 
 
 // define reducer
-const initialState = {};
+// const initialState = {};
 
-const imagesReducer = (state = initialState, action) => {
+const imagesReducer = (state = {}, action) => {
   switch (action.type) {
     case GET_ALL_IMAGES: {
       const newState = { ...state };

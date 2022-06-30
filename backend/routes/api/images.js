@@ -1,7 +1,7 @@
 const express = require('express');
 const asyncHandler = require('express-async-handler');
 const { Image, Comment, User, Album } = require('../../db/models');
-const image = require('../../db/models/image');
+// const image = require('../../db/models/image');
 const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
 
 const router = express.Router();
@@ -47,7 +47,7 @@ router.post('/', requireAuth, asyncHandler(async (req, res) => {
 }));
 
 
-router.patch('/:id', requireAuth, asyncHandler(async (req, res) => {
+router.put('/:id', requireAuth, asyncHandler(async (req, res) => {
 
   const imageId = req.params.id
   const image = await Image.findByPk(imageId, {});

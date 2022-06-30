@@ -14,9 +14,9 @@ const ImageList = () => {
   return (
     <>
       <h1>Image List</h1>
-      {imageList?.map(( ele ) => (
+      {imageList?.map(( image ) => (
 
-          <img src={ele.imageUrl} alt={ele.userId} key={ele.id}/>
+          <img src={image.imageUrl} alt={image.userId} key={image.id}/>
 
       ))}
     </>

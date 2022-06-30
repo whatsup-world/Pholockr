@@ -20,18 +20,14 @@ const ImageDetail = () => {
   console.log("+++++++++++component imageDetail+++++++: ", image);
 
 
-  // return (
-
-  //   <>
-  //     <h1>Image Detail</h1>
-
-
-  //       <img src={image.imageUrl} alt={image.userId} key={image.imageId}/>
-
-
-
-  //   </>
-  // );
+  return (
+    <div id="image-container">
+      <>
+        <h1>Image Detail</h1>
+        <img src={image.imageUrl} alt={image.userId}/>
+      </>
+    </div>
+  );
 
 
 }
