@@ -52,14 +52,14 @@ router.put('/:id', requireAuth, asyncHandler(async (req, res) => {
   const imageId = req.params.id
   const image = await Image.findByPk(imageId, {});
 
-  const { imageUrl, albumId } = req.body;
-  const updatedImage = await image.update({ imageUrl, albumId });
+  const { userId, imageUrl, albumId } = req.body;
+  const updatedImage = await image.update({ userId, imageUrl, albumId });
 
   return res.json( updatedImage );
 }));
 
 
-router.delete('/:id', asyncHandler(async (req, res) => {
+router.delete('/:id', requireAuth, asyncHandler(async (req, res) => {
   const image = await Image.findByPk(req.params.id, {
     // include: ['comments'],
     // order: [ ['id', 'DESC'] ]

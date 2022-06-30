@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux";
 import { thunkGetAllImages } from "../../store/image";
@@ -10,8 +10,8 @@ const ImageDetail = () => {
   // console.log("+++++++++++component imageDetail+++++++: ", state);
 
   const image = useSelector(state => state.images[imageId]);
-  const [ showEditForm, setShowEditForm ] = useState(false);
-  const [ showDeleteForm, setShowDeleteForm ] = useState(false);
+  // const [ showEditForm, setShowEditForm ] = useState(false);
+  // const [ showDeleteForm, setShowDeleteForm ] = useState(false);
 
   useEffect(() => {
     dispatch(thunkGetAllImages());
