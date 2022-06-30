@@ -1,7 +1,7 @@
 const express = require('express');
 const asyncHandler = require('express-async-handler');
 const { Image, Comment, User, Album } = require('../../db/models');
-const image = require('../../db/models/image');
+// const image = require('../../db/models/image');
 const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
 
 const router = express.Router();
@@ -27,14 +27,14 @@ router.get('/user/:id', asyncHandler(async (req, res) => {
 
 
 
-router.get('/:id', asyncHandler(async (req, res) => {
+router.get('/:id(\\d+)', asyncHandler(async (req, res) => {
   const imageId = req.params.id
   const image = await Image.findByPk(imageId, {
     include: {
       model: Comment,
-    },
+    }
   });
-  // console.log("backend Image: ", images)
+  // console.log("backend Image: ", image)
   return res.json( image );
 }))
 
@@ -47,19 +47,19 @@ router.post('/', requireAuth, asyncHandler(async (req, res) => {
 }));
 
 
-router.patch('/:id', requireAuth, asyncHandler(async (req, res) => {
+router.put('/:id(\\d+)', requireAuth, asyncHandler(async (req, res) => {
 
   const imageId = req.params.id
   const image = await Image.findByPk(imageId, {});
 
-  const { imageUrl, albumId } = req.body;
-  const updatedImage = await image.update({ imageUrl, albumId });
+  const { userId, imageUrl, albumId } = req.body;
+  const updatedImage = await image.update({ userId, imageUrl, albumId });
 
   return res.json( updatedImage );
 }));
 
 
-router.delete('/:id', asyncHandler(async (req, res) => {
+router.delete('/:id(\\d+)', requireAuth, asyncHandler(async (req, res) => {
   const image = await Image.findByPk(req.params.id, {
     // include: ['comments'],
     // order: [ ['id', 'DESC'] ]

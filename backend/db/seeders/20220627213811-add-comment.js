@@ -6,37 +6,37 @@ module.exports = {
       {
         userId: 1,
         imageId: 1,
-        comment: "This is my dog"
+        message: "This is my dog"
       },
       {
         userId: 2,
         imageId: 1,
-        comment: "I like your dog!"
+        message: "I like your dog!"
       },
       {
         userId: 3,
         imageId: 1,
-        comment: "It's cute!"
+        message: "It's cute!"
       },
       {
         userId: 1,
         imageId: 4,
-        comment: "Is this your dog?"
+        message: "Is this your dog?"
       },
       {
         userId: 2,
         imageId: 4,
-        comment: "Yes, it's cute right?"
+        message: "Yes, it's cute right?"
       },
       {
         userId: 3,
         imageId: 4,
-        comment: "OMG, it's so cute!"
+        message: "OMG, it's so cute!"
       },
       {
         userId: 3,
         imageId: 4,
-        comment: "How old is he?"
+        message: "How old is he?"
       },
     ], {});
   },

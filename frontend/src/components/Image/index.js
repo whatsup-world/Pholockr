@@ -1,23 +1,28 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllImages } from '../../store/image';
+import { thunkGetAllImages } from '../../store/image';
+import { useHistory } from 'react-router';
 
 const ImageList = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const imageList = useSelector((state) => Object.values(state.images));
   // console.log("component imageList: ", imageList);
 
   useEffect(() => {
-    dispatch(getAllImages());
+    dispatch(thunkGetAllImages());
   }, [dispatch]);
 
   return (
     <>
       <h1>Image List</h1>
-      {imageList?.map(( ele ) => (
-
-          <img src={ele.imageUrl} alt={ele.userId} key={ele.id}/>
-
+      {imageList?.map(( image ) => (
+        <div key={image.id} onClick={(e) => {
+          e.preventDefault();
+          history.push(`/images/${image.id}`)
+          }}>
+          <img src={image.imageUrl} alt={image.userId} key={image.id}/>
+        </div>
       ))}
     </>
   );

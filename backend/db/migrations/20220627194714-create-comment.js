@@ -26,7 +26,7 @@ module.exports = {
           },
         },
       },
-      comment: {
+      message: {
         allowNull: false,
         type: Sequelize.TEXT
       },

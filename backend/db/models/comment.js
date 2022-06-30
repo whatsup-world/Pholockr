@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    comment: {
+    message: {
       type: DataTypes.TEXT,
       allowNull: false,
     }
