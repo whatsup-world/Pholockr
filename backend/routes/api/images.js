@@ -7,7 +7,11 @@ const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth')
 const router = express.Router();
 
 router.get('/', asyncHandler(async (req, res) => {
-  const images = await Image.findAll();
+  const images = await Image.findAll({
+    include: {
+      model: Comment,
+    }
+  });
   // console.log("backend Image: ", images)
   return res.json( images );
 }))
@@ -47,15 +51,18 @@ router.post('/', requireAuth, asyncHandler(async (req, res) => {
 }));
 
 
-router.put('/:id(\\d+)', requireAuth, asyncHandler(async (req, res) => {
+router.put('/:id', requireAuth, asyncHandler(async (req, res) => {
 
   const imageId = req.params.id
-  const image = await Image.findByPk(imageId, {});
 
-  const { userId, imageUrl, albumId } = req.body;
-  const updatedImage = await image.update({ userId, imageUrl, albumId });
+  const image = await Image.findByPk(imageId);
 
-  return res.json( updatedImage );
+  // const { userId, imageUrl, albumId } = req.body;
+  const { imageUrl } = req.body;
+  // const updatedImage = await image.update({ userId, imageUrl, albumId });
+  const updatedImage = await image.update({ imageUrl });
+
+  return res.json({updatedImage });
 }));
 
 

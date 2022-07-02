@@ -4,7 +4,7 @@ import { csrfFetch } from "./csrf";
 const GET_ALL_IMAGES = 'image/GET_ALL_IMAGES';
 const GET_ONE_IMAGE = 'image/GET_ONE_IMAGE';
 const CREATE_IMAGE = 'image/CREATE_IMAGE';
-
+const UPDATE_IMAGE = 'image/UPDATE_IMAGE';
 const DELETE_IMAGE = 'image/DELETE_IMAGE';
 
 // define actions
@@ -25,6 +25,13 @@ const getOneImage = (image) => {
 const createImage = (image) => {
   return {
     type: CREATE_IMAGE,
+    image
+  };
+};
+
+const updateImage = (image) => {
+  return {
+    type: UPDATE_IMAGE,
     image
   };
 };
@@ -62,6 +69,7 @@ export const thunkGetOneImage = (imageId) => async (dispatch) => {
   }
 };
 
+
 export const thunkCreateImage = (image) => async (dispatch) => {
   const response = await csrfFetch('/api/images', {
     method: 'POST',
@@ -77,13 +85,32 @@ export const thunkCreateImage = (image) => async (dispatch) => {
   }
 };
 
+
+export const thunkUpdateImage = (payload) => async (dispatch) => {
+    // console.log("++++++++++thunk data++++++++++++++: ", imageId, userId, albumId)
+
+  const response = await csrfFetch(`/api/images/${payload.id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+
+  if (response.ok) {
+    const image = await response.json();
+    console.log("+++++++++thunk image++++++++: ", image)
+    dispatch(updateImage(image));
+    return image;
+  }
+};
+
+
 export const thunkDeleteImage = (imageId) => async (dispatch) => {
   const response = await csrfFetch(`/api/images/${imageId}`, {
     method: 'DELETE'
   });
 
   if (response.ok) {
-    const image = await response.json();
+    // const image = await response.json();
     // console.log("thunk data: ", data)
     dispatch(deleteImage(imageId));
     // return image;
@@ -116,6 +143,17 @@ const imagesReducer = (state = {}, action) => {
       const newState = {
         ...state,
         [action.image.id]: action.image
+      };
+      // console.log(newState)
+      return newState
+    };
+
+
+    case UPDATE_IMAGE: {
+      const newState = {
+        ...state,
+        [action.image.id]: action.image
+        // apple: action.imageId
       };
       // console.log(newState)
       return newState

@@ -17,7 +17,7 @@ function ImageFormPage() {
   const [imageUrl, setImageUrl] = useState("");
   const [albumId, setAlbumId] = useState("");
   // const [userId, setUserId] = useState("");
-  const [errors, setErrors] = useState([]);
+  // const [errors, setErrors] = useState([]);
 
   // if (sessionUser) return <Redirect to="/" />;
 
