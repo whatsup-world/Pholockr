@@ -6,7 +6,7 @@ import SignupFormPage from "./components/SignupFormPage";
 import ImageFormPage from "./components/ImageFormPage";
 import ImageList from "./components/Image";
 import ImageDetail from "./components/ImageDetail";
-import ImageDeletePage from "./components/ImageDeletePage";
+import ImageEditPage from "./components/ImageEditPage";
 import * as sessionActions from "./store/session";
 import {thunkGetAllImages} from "./store/image";
 import {thunkGetComments} from "./store/comment";
@@ -42,9 +42,9 @@ function App() {
           <Route path="/images/:imageId">
             <ImageDetail />
           </Route>
-          {/* <Route path="/images/:imageId">
-            <ImageDeletePage />
-          </Route> */}
+          <Route path="/editimage">
+            <ImageEditPage />
+          </Route>
           <Route exact path="/upload">
             <ImageFormPage />
           </Route>
