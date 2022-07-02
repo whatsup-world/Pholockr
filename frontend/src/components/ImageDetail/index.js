@@ -13,7 +13,7 @@ const ImageDetail = () => {
   const history = useHistory();
   const [imageUrl, setImageUrl] = useState("");
   const [showEditImageForm, setShowEditImageForm] = useState(false);
-  const [updatedImageUrl, setUpdatedImageUrl] = useState("");
+  // const [updateImage, setUpdateImage] = useState(false);
 
 
   // console.log("+++++++++++component imageDetail+++++++: ", user);
@@ -43,24 +43,29 @@ const ImageDetail = () => {
 
   // console.log("+++++++++++component imageDetail+++++++: ", image);
 
+  const updateImage = (e) => {
+    setShowEditImageForm(true)
+  }
+
   return (
       <>
         <div id="image-container">
           <h1>Image Detail</h1>
           <img src={image?.imageUrl} alt="image"/>
-            {/* {user?.id === image?.userId && <button onClick={history.push('/editimage')}>Edit Image</button>} */}
-            {/* {user?.id === image?.userId && <button onClick={document.getElementById("image-edit-form").hidden.value = false}>Edit Image</button>} */}
-            {user?.id === image?.userId && <button onClick={() => setShowEditImageForm(true)}>Edit Image</button>}
+            {user?.id === image?.userId && <button onClick={updateImage}>Edit Image</button>}
+            {/* {user?.id === image?.userId && <button onClick={() => setShowEditImageForm(true)}>Edit Image</button>} */}
+            {/* {user?.id === image?.userId && <button>Edit Image</button>} */}
 
-
-
-            <div id="image-update-component">
-              <ImageUpdatePage
-                image={image}
-                hideForm={() => setShowEditImageForm(false)}
-              />
-            </div>
-
+            {
+              showEditImageForm &&
+              <div id="image-update-component">
+                <ImageUpdatePage
+                  image={image}
+                  // hideForm={() => setShowEditImageForm(false)}
+                  setShowEditImageForm={setShowEditImageForm}
+                />
+              </div>
+            }
 
             {/* <form hideForm={() => setShowEditImageForm(true)} id="image-edit-form">
               <label>

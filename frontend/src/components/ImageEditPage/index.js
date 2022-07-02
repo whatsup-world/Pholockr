@@ -6,7 +6,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import { thunkGetAllImages, thunkGetOneImage, thunkUpdateImage } from "../../store/image";
 
 
-function ImageUpdatePage({ image, hideForm }) {
+function ImageUpdatePage({ image, setShowEditImageForm }) {
   // const imageInfo = useSelector(state => state.image)
   console.log("+++++++++++component imageEdit++++++++++ :", image)
 
@@ -34,16 +34,19 @@ function ImageUpdatePage({ image, hideForm }) {
     console.log("+++++++++++component updatedImage++++++++++ :", payload)
 
 
-    await dispatch(thunkUpdateImage(payload));
+    const res = await dispatch(thunkUpdateImage(payload));
     await dispatch(thunkGetAllImages(payload))
 
-    history.push(`/images/${imageId}`)
+    if (res) {
+      setShowEditImageForm(false)
+    }
+    // history.push(`/images/${imageId}`)
   }
 
-  const handleCancelClick = (e) => {
-    e.preventDefault();
-    hideForm();
-  };
+  // const handleCancelClick = (e) => {
+  //   e.preventDefault();
+  //   hideForm();
+  // };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -58,9 +61,10 @@ function ImageUpdatePage({ image, hideForm }) {
         />
       </label>
       <button type="submit" onClick={handleSubmit}>Confirm</button>
-      <button type="button" onClick={handleCancelClick}>Cancel</button>
+      <button type="button" onClick={(e) => setShowEditImageForm(false)}>Cancel</button>
     </form>
   );
+
 }
 
 export default ImageUpdatePage;
