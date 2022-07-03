@@ -2,8 +2,8 @@ import { csrfFetch } from "./csrf";
 
 const GET_COMMENTS = 'comment/GET_COMMENTS';
 const CREATE_COMMENT = 'comment/CREATE_COMMENT';
-const UPDATE_COMMENT = 'comment/UPDATE_COMMENT';
-const DELETE_COMMENT = 'comment/DELETE_COMMENT';
+// const UPDATE_COMMENT = 'comment/UPDATE_COMMENT';
+// const DELETE_COMMENT = 'comment/DELETE_COMMENT';
 
 
 const getComments = (comments) => {
@@ -20,19 +20,19 @@ const createComment = (comment) => {
   };
 };
 
-const updateComment = (comment) => {
-  return {
-    type: UPDATE_COMMENT,
-    comment
-  };
-};
+// const updateComment = (comment) => {
+//   return {
+//     type: UPDATE_COMMENT,
+//     comment
+//   };
+// };
 
-const deleteComment = (comment) => {
-  return {
-    type: DELETE_COMMENT,
-    comment
-  };
-};
+// const deleteComment = (comment) => {
+//   return {
+//     type: DELETE_COMMENT,
+//     comment
+//   };
+// };
 
 
 export const thunkGetComments = () => async (dispatch) => {
@@ -49,7 +49,8 @@ export const thunkGetComments = () => async (dispatch) => {
 
 
 export const thunkCreateComment = (comment) => async (dispatch) => {
-  const response = await csrfFetch('/api/images', {
+  // console.log("+++++++++thunkCreateComment: ++++++++++",comment)
+  const response = await csrfFetch('/api/comments', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(comment)
@@ -58,42 +59,42 @@ export const thunkCreateComment = (comment) => async (dispatch) => {
   if (response.ok) {
     const newComment = await response.json();
 
-    // console.log("++++++++++++++++thunk data++++++++++++++++: ", data)
+    // console.log("++++++++++++++++thunkCreateComment: ++++++++++++++++: ", newComment)
     dispatch(createComment(newComment));
     return newComment;
   }
 };
 
 
-export const thunkUpdateComment = (comment) => async (dispatch) => {
-  const response = await csrfFetch('/api/images', {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(comment)
-  });
+// export const thunkUpdateComment = (comment) => async (dispatch) => {
+//   const response = await csrfFetch('/api/images', {
+//     method: 'PUT',
+//     headers: { 'Content-Type': 'application/json' },
+//     body: JSON.stringify(comment)
+//   });
 
-  if (response.ok) {
-    const updatedComment = await response.json();
+//   if (response.ok) {
+//     const updatedComment = await response.json();
 
-    // console.log("++++++++++++++++thunk data++++++++++++++++: ", updatedComment)
-    dispatch(updateComment(updatedComment));
-    return updatedComment;
-  }
-};
+//     // console.log("++++++++++++++++thunk data++++++++++++++++: ", updatedComment)
+//     dispatch(updateComment(updatedComment));
+//     return updatedComment;
+//   }
+// };
 
 
-export const thunkDeleteComment = (comment) => async (dispatch) => {
-  const response = await csrfFetch(`/api/comments/${comment.id}`, {
-    method: 'DELETE'
-  });
+// export const thunkDeleteComment = (comment) => async (dispatch) => {
+//   const response = await csrfFetch(`/api/comments/${comment.id}`, {
+//     method: 'DELETE'
+//   });
 
-  if (response.ok) {
-    const comment = await response.json();
-    // console.log("thunk data: ", data)
-    dispatch(deleteComment(comment));
-    return comment;
-  }
-};
+//   if (response.ok) {
+//     const comment = await response.json();
+//     // console.log("thunk data: ", data)
+//     dispatch(deleteComment(comment));
+//     return comment;
+//   }
+// };
 
 
 const commentsReducer = (state = {}, action) => {
@@ -105,9 +106,13 @@ const commentsReducer = (state = {}, action) => {
 
       return newState
     };
-    // case CREATE_COMMENT: {
-
-    // };
+    case CREATE_COMMENT: {
+      const newState = {
+        ...state,
+        [action.comment.id]: action.comment
+      };
+      return newState
+    };
     // case UPDATE_COMMENT: {
 
     // };
