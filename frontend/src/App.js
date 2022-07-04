@@ -21,7 +21,7 @@ function App() {
 
   useEffect(() => {
     dispatch(thunkGetAllImages());
-    dispatch(thunkGetComments());
+    // dispatch(thunkGetComments());
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
   }, [dispatch]);
 
@@ -30,6 +30,9 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
+          <Route path="/">
+            <ImageList to="/images"/>
+          </Route>
           <Route path="/login">
             <LoginFormPage />
           </Route>

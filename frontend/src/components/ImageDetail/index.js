@@ -13,8 +13,9 @@ const ImageDetail = () => {
   const user = useSelector(state => state.session.user)
   const history = useHistory();
   const [imageUrl, setImageUrl] = useState("");
-  // const [selectComment, setSelectComment] = useState(0);
+  const [selectComment, setSelectComment] = useState("");
   const [showEditImageForm, setShowEditImageForm] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
   // const [updateImage, setUpdateImage] = useState(false);
 
 
@@ -30,38 +31,47 @@ const ImageDetail = () => {
 
   useEffect(() => {
     // dispatch(thunkGetOneImage(imageId));
-    dispatch(thunkGetComments())
-    dispatch(thunkGetAllImages());
-  }, [dispatch]);
+    // dispatch(thunkGetComments())
+    dispatch(thunkGetAllImages())
+      .then(() => setIsLoaded(true));
+  }, [dispatch, isLoaded]);
 
   const deleteImage = async e => {
     e.preventDefault();
-    console.log(imageId)
+    // console.log(imageId)
     await dispatch(thunkDeleteImage(imageId));
     history.push('/images')
   }
 
-  const deleteComment = async e => {
-    e.preventDefault();
-    const comment = image.Comments
-    // console.log("+++++++++++component imageDetail+++++++: ", comment);
+  // const deleteComment = async e => {
+  //   e.preventDefault();
+  //   const comment = image.Comments
+  //   // console.log("+++++++++++component imageDetail+++++++: ", comment);
 
-    let sortedComment = {};
-    comment.map(element => sortedComment[element.id] = element)
-    console.log(sortedComment)
+  //   let sortedComment = {};
+  //   comment.map(element => sortedComment[element.id] = element)
+  //   console.log(sortedComment)
 
-    // console.log("&&&&&&&&&&&&& Delete Comment&&&&&&&&&: ", comment.id)
-    // await dispatch(thunkDeleteComment());
-    history.push(`/images/${imageId}`)
+  //   // console.log("&&&&&&&&&&&&& Delete Comment&&&&&&&&&: ", comment.id)
+  //   // await dispatch(thunkDeleteComment());
+  //   history.push(`/images/${imageId}`)
+  // }
+
+  const deleteComment = async (commentId) => {
+    // console.log("hi",commentId)
+    const confirmed = window.confirm("Are you sure you want to delete this comment?")
+    if (confirmed) {
+      return await dispatch(thunkDeleteComment(commentId))
+        .then(setIsLoaded(!isLoaded))
+    }
   }
-
-
-
   // console.log("+++++++++++component imageDetail+++++++: ", image);
 
   const updateImage = (e) => {
     setShowEditImageForm(true)
   }
+
+
 
   return (
       <>
@@ -88,9 +98,9 @@ const ImageDetail = () => {
           <div id="comment-component">
             {
               image?.Comments?.map(comment =>
-                <div>
-                  {comment.userId} {comment.message}
-                  {user?.id === comment.userId && <button onClick={deleteComment} >Delete Comment</button>}
+                <div key={comment.id}>
+                  {comment.message}
+                  {user?.id === comment.userId && <button onClick={() => deleteComment(comment.id)}>Delete Comment</button>}
                 </div>)
             }
           </div>

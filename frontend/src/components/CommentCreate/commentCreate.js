@@ -19,8 +19,8 @@ function CommentCreate({image}) {
     e.preventDefault();
     setMessage("");
     const newComment = {message: message, imageId: imageId, userId: userId}
-    let commentCreated = await dispatch(thunkCreateComment(newComment))
-    await dispatch(thunkGetAllImages(newComment))
+    await dispatch(thunkCreateComment(newComment))
+    await dispatch(thunkGetAllImages())
     // console.log("++++++++component Comment Create+++++++: ", commentCreated)
     history.push(`/images/${imageId}`)
   }

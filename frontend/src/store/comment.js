@@ -35,17 +35,17 @@ const deleteComment = (comment) => {
 };
 
 
-export const thunkGetComments = () => async (dispatch) => {
-  const response = await csrfFetch('/api/comments');
+// export const thunkGetComments = () => async (dispatch) => {
+//   const response = await csrfFetch('/api/comments');
 
-  if (response.ok) {
-    const comments = await response.json();
+//   if (response.ok) {
+//     const comments = await response.json();
 
-    // console.log("++++++++++++++++thunk data++++++++++++++++: ", data)
-    dispatch(getComments(comments));
-    return comments;
-  }
-};
+//     // console.log("++++++++++++++++thunk data++++++++++++++++: ", data)
+//     dispatch(getComments(comments));
+//     return comments;
+//   }
+// };
 
 
 export const thunkCreateComment = (comment) => async (dispatch) => {
@@ -83,16 +83,16 @@ export const thunkCreateComment = (comment) => async (dispatch) => {
 // };
 
 
-export const thunkDeleteComment = (comment) => async (dispatch) => {
-  const response = await csrfFetch(`/api/comments/${comment.id}`, {
+export const thunkDeleteComment = (commentId) => async (dispatch) => {
+  const response = await csrfFetch(`/api/comments/${commentId}`, {
     method: 'DELETE'
   });
 
   if (response.ok) {
-    const comment = await response.json();
+
     // console.log("thunk data: ", data)
-    dispatch(deleteComment(comment));
-    return comment;
+
+    return "Success!";
   }
 };
 
