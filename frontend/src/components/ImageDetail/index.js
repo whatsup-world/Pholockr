@@ -104,9 +104,17 @@ const ImageDetail = () => {
             }
           </div>
 
-          <div id="create-comment-component">
-            <CommentCreate image={image}/>
-          </div>
+          {
+            user?
+              <div id="create-comment-component">
+                <CommentCreate image={image}/>
+              </div>
+              :
+              <div id="redirect-to-login-page">
+                <p>Please log in to comment!</p>
+              </div>
+          }
+
 
         </div>
       </>
