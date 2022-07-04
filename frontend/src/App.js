@@ -30,7 +30,7 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
-          <Route path="/">
+          <Route exact path="/">
             <ImageList to="/images"/>
           </Route>
           <Route path="/login">

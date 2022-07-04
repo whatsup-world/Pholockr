@@ -15,7 +15,7 @@ function ImageFormPage() {
   const userId = useSelector(state => state.session.user?.id);
   // console.log(userId)
   const [imageUrl, setImageUrl] = useState("");
-  const [albumId, setAlbumId] = useState("");
+  const [albumId, setAlbumId] = useState(1);
   // const [userId, setUserId] = useState("");
   // const [errors, setErrors] = useState([]);
 
@@ -28,7 +28,7 @@ function ImageFormPage() {
       let newImage = await dispatch(thunkCreateImage({imageUrl, userId, albumId}));
       // setErrors = ([]);
       // setImageUrl("");
-      console.log(newImage)
+      // console.log(newImage)
       // return newImage
       history.push(`/images/${newImage.id}`);
   };
@@ -47,24 +47,13 @@ function ImageFormPage() {
           required
         />
       </label>
-      {/* <label>
-        <input
-          hidden={true}
-          type="text"
-          value={userId}
-          onChange={(e) => userId(e.target.value)}
-          // required
-        />
-      </label> */}
-      <label>
-        Select Album
 
+      <label hidden={true}>
+        Select Album
         <input
-          // hidden={true}
           type="text"
           value={albumId}
-          onChange={(e) => setAlbumId(1)}  // set the defualt album
-          // required
+          onChange={(e) => setAlbumId(1)}
         />
       </label>
       <button type="submit">Confirm</button>

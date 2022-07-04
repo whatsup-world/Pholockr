@@ -38,9 +38,12 @@ const ImageDetail = () => {
 
   const deleteImage = async e => {
     e.preventDefault();
-    // console.log(imageId)
-    await dispatch(thunkDeleteImage(imageId));
-    history.push('/images')
+    const confirmed = window.confirm("Are you sure you want to delete this image?")
+    if (confirmed) {
+      await dispatch(thunkDeleteImage(imageId));
+      history.push('/images')
+    }
+
   }
 
   // const deleteComment = async e => {
@@ -71,16 +74,12 @@ const ImageDetail = () => {
     setShowEditImageForm(true)
   }
 
-
-
   return (
       <>
         <div id="image-container">
           <h1>Image Detail</h1>
           <img src={image?.imageUrl} key={imageId} alt="image"/>
             {user?.id === image?.userId && <button onClick={updateImage}>Edit Image</button>}
-            {/* {user?.id === image?.userId && <button onClick={() => setShowEditImageForm(true)}>Edit Image</button>} */}
-            {/* {user?.id === image?.userId && <button>Edit Image</button>} */}
 
             {
               showEditImageForm &&
@@ -105,13 +104,9 @@ const ImageDetail = () => {
             }
           </div>
 
-
           <div id="create-comment-component">
             <CommentCreate image={image}/>
           </div>
-
-
-
 
         </div>
       </>

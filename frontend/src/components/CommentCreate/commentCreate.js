@@ -25,10 +25,6 @@ function CommentCreate({image}) {
     history.push(`/images/${imageId}`)
   }
 
-  // console.log("++++++Component commentCreate: ", image)
-  // console.log("++++++Component commentCreate: ", userId)
-  // console.log("++++++Component commentCreate: ", imageId)
-
   return (
     <>
       <form onSubmit={handleSubmit}>
