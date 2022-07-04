@@ -5,8 +5,8 @@ const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth')
 
 const router = express.Router();
 
-router.get('/images/:id', asyncHandler(async (req, res) => {
-  const imageId = req.params.id;
+router.get('/images/:imageId', asyncHandler(async (req, res) => {
+  const imageId = req.params;
   const comments = await Comment.findAll({
     where: {
       imageId: imageId
