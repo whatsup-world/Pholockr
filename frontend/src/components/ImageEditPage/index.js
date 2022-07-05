@@ -4,7 +4,7 @@ import { useParams, useHistory } from 'react-router-dom';
 // import { Redirect } from "react-router-dom";
 // import * as sessionActions from "../../store/session";
 import { thunkGetAllImages, thunkGetOneImage, thunkUpdateImage } from "../../store/image";
-
+import "./ImageEdit.css";
 
 function ImageUpdatePage({ image, setShowEditImageForm }) {
   // const imageInfo = useSelector(state => state.image)
@@ -52,7 +52,7 @@ function ImageUpdatePage({ image, setShowEditImageForm }) {
     <form onSubmit={handleSubmit}>
       {/* <img src={image.imageUrl} alt={image.id}/> */}
       <label>
-        Edit Image
+        Image Url
         <input
           type="text"
           value={imageUrl}
