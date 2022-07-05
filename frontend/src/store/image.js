@@ -97,7 +97,7 @@ export const thunkUpdateImage = (payload) => async (dispatch) => {
 
   if (response.ok) {
     const image = await response.json();
-    console.log("+++++++++thunk image++++++++: ", image)
+    // console.log("+++++++++thunk image++++++++: ", image)
     dispatch(updateImage(image));
     return image;
   }

@@ -5,6 +5,7 @@ import { thunkDeleteImage, thunkGetAllImages, thunkGetOneImage, thunkUpdateImage
 import { thunkGetComments, thunkDeleteComment } from "../../store/comment";
 import ImageUpdatePage from "../ImageEditPage";
 import CommentCreate from "../CommentCreate/commentCreate";
+import "./ImageDetail.css";
 // import { thunkCreateComment } from "../../store/comment";
 
 const ImageDetail = () => {
@@ -79,25 +80,27 @@ const ImageDetail = () => {
         <div id="image-container">
           <h1>Image Detail</h1>
           <img src={image?.imageUrl} key={imageId} alt="image"/>
-            {user?.id === image?.userId && <button onClick={updateImage}>Edit Image</button>}
+            <div id="image-edit-container">
+              {user?.id === image?.userId && <button onClick={updateImage}>Edit Image</button>}
 
-            {
-              showEditImageForm &&
-              <div id="image-update-component">
-                <ImageUpdatePage
-                  image={image}
-                  // hideForm={() => setShowEditImageForm(false)}
-                  setShowEditImageForm={setShowEditImageForm}
-                />
-              </div>
-            }
+              {
+                showEditImageForm &&
+                <div id="image-update-component">
+                  <ImageUpdatePage
+                    image={image}
+                    // hideForm={() => setShowEditImageForm(false)}
+                    setShowEditImageForm={setShowEditImageForm}
+                  />
+                </div>
+              }
 
+            </div>
             {user?.id === image?.userId && <button onClick={deleteImage}>Delete Image</button>}
 
           <div id="comment-component">
             {
               image?.Comments?.map(comment =>
-                <div key={comment.id}>
+                <div className="single-comment-component" key={comment.id}>
                   {comment.message}
                   {user?.id === comment.userId && <button onClick={() => deleteComment(comment.id)}>Delete Comment</button>}
                 </div>)
@@ -114,7 +117,6 @@ const ImageDetail = () => {
                 <p>Please log in to comment!</p>
               </div>
           }
-
 
         </div>
       </>

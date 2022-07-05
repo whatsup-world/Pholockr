@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from 'react-router-dom';
 import { thunkCreateComment } from "../../store/comment";
 import { thunkGetAllImages } from "../../store/image";
-
+import "./CommentCreate.css";
 
 function CommentCreate({image}) {
   const dispatch = useDispatch();
@@ -26,20 +26,20 @@ function CommentCreate({image}) {
   }
 
   return (
-    <>
-      <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>
         <label>
-          New Comment
-          <textarea
-            type="text"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            required
-          />
+          <div id="new-comment-component">
+            <p>New Comment</p>
+            <textarea
+              type="text"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              required
+            />
+            <button type="submit" onClick={handleSubmit}>Confirm</button>
+          </div>
         </label>
-        <button type="submit" onClick={handleSubmit}>Confirm</button>
       </form>
-    </>
   )
 };
 

@@ -1,0 +1,23 @@
+.images-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.images-page > h1 {
+  margin-bottom: 50px;
+}
+
+.images-list {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0px 100px;
+  align-content: space-between;
+  justify-content: space-evenly;
+}
+
+.images-page img {
+  /* max-width: 400px; */
+  max-height: 350px;
+  margin-bottom: 50px;
+}

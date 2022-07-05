@@ -34,30 +34,34 @@ function ImageFormPage() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      {/* <ul>
-        {errors.map((error, idx) => <li key={idx}>{error}</li>)}
-      </ul> */}
-      <label>
-        Image Link
-        <input
-          type="text"
-          value={imageUrl}
-          onChange={(e) => setImageUrl(e.target.value)}
-          required
-        />
-      </label>
+    <div id="image-form-container">
+      <form onSubmit={handleSubmit}>
+        {/* <ul>
+          {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+        </ul> */}
+        <div id="upload-image-container">
 
-      <label hidden={true}>
-        Select Album
-        <input
-          type="text"
-          value={albumId}
-          onChange={(e) => setAlbumId(1)}
-        />
-      </label>
-      <button type="submit">Confirm</button>
-    </form>
+          <p>Enter Image Link</p>
+          <input
+            type="text"
+            value={imageUrl}
+            onChange={(e) => setImageUrl(e.target.value)}
+            required
+          />
+
+
+          <label hidden={true}>
+            Select Album
+            <input
+              type="text"
+              value={albumId}
+              onChange={(e) => setAlbumId(1)}
+            />
+          </label>
+          <button type="submit">Confirm</button>
+        </div>
+      </form>
+    </div>
   );
 }
 

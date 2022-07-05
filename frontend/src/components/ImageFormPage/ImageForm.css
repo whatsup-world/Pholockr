@@ -1,0 +1,22 @@
+#image-form-container {
+
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+}
+
+#upload-image-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+
+#upload-image-container > * {
+  margin: 20px;
+}
+
+#upload-image-container > p {
+  font-size: 30px;
+  font-weight:bold;
+}
