@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { thunkGetAllImages } from '../../store/image';
 import { useHistory } from 'react-router';
+import "./Image.css";
+
 
 const ImageList = () => {
   const dispatch = useDispatch();
@@ -14,9 +16,10 @@ const ImageList = () => {
   }, [dispatch]);
 
   return (
-    <>
-      <h1>Image List</h1>
-      {imageList?.map(( image ) => (
+    <div className='images-page'>
+      <h1>Images</h1>
+      <div className='images-list'>
+        {imageList?.map(( image ) => (
         <div key={image.id} onClick={(e) => {
           e.preventDefault();
           history.push(`/images/${image.id}`)
@@ -24,7 +27,9 @@ const ImageList = () => {
           <img src={image.imageUrl} alt={image.userId} key={image.id}/>
         </div>
       ))}
-    </>
+      </div>
+
+    </div>
   );
 };
 

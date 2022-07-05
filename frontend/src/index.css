@@ -1,1 +1,10 @@
-/* TODO Add site wide styles */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: auto;
+  background-color: #ffffff;
+  font-size: 14px;
+  font-family: Proxima Nova,helvetica neue,helvetica,arial,sans-serif;
+  display: block;
+}
