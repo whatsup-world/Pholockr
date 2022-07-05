@@ -11,6 +11,10 @@ function LoginFormPage() {
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState([]);
 
+  const demouser = async () => {
+    return dispatch(sessionActions.login({ credential: "Demo-lition", password: "password" }))
+  }
+
   if (sessionUser) return (
     <Redirect to="/" />
   );
@@ -50,7 +54,13 @@ function LoginFormPage() {
           />
         </label>
         <button type="submit">Log In</button>
+        <br></br>
+
       </form>
+      <div id="demo-button">
+        <p>Try with Demo User</p>
+        <button className='demo' onClick={demouser}>Demo user</button>
+      </div>
     </div>
   );
 }
